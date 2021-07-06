@@ -1,0 +1,16 @@
+# config/locale/errors.yml
+
+en:
+  error_messages:
+
+    # Products
+    "user_not_found":
+      code: 1
+      title: "Could not find User"
+      detail: "This User does not exist."
+
+    # Manufacturers
+    "incorrect_password":
+      code: 2
+      title: "Incorrect Password"
+      detail: "Please recheck your password"

@@ -1,0 +1,2 @@
+class DoubtsController < ApplicationController
+end
