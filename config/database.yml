@@ -23,16 +23,16 @@ default: &default
 
 development:
   <<: *default
-  database: coding_ninja0_1_development
+  url: postgres://inxuxudiwtzwbc:d27c2c9dd9e5b6075bd323bba33775984c174903541a22ad432821ccbc551b5a@ec2-52-45-179-101.compute-1.amazonaws.com:5432/d7ffj9arjudi33
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user running Rails.
-  username: himanshu
+  # username: himanshu
 
-  # The password associated with the postgres role (username).
-  password:      
+  # # The password associated with the postgres role (username).
+  # password:      
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
