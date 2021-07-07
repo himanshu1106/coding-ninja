@@ -23,16 +23,16 @@ default: &default
 
 development:
   <<: *default
-  database: coding_ninja0_1_development
+  url: ENV['DATABASE_URL']
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user running Rails.
-  username: himanshu
+  # username: himanshu
 
-  # The password associated with the postgres role (username).
-  password:      
+  # # The password associated with the postgres role (username).
+  # password:      
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: coding_ninja0_1_production
-  username: coding_ninja0_1
-  password: <%= ENV['CODING_NINJA0_1_DATABASE_PASSWORD'] %>
+  url: ENV['DATABASE_URL']
