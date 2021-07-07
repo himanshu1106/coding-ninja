@@ -32,7 +32,7 @@ class DoubtsController < ApiController
     def stats
       total_doubts = Doubt.active_or_resolved.size
       solved_doubts = Doubt.solved.size
-      avg_time = Doubt.solved.select("avg(doubts.solved_at - doubts.created_at) as time_val").last.time_val
+      avg_time = Doubt.solved.select("avg(doubts.solved_at - doubts.created_at) as time_val").last.time_val  
 
     end
 
