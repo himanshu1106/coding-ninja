@@ -5,12 +5,27 @@ en:
 
     # Products
     "user_not_found":
-      code: 1
+      code: 404
       title: "Could not find User"
       detail: "This User does not exist."
 
     # Manufacturers
     "incorrect_password":
-      code: 2
+      code: 422
       title: "Incorrect Password"
       detail: "Please recheck your password"
+    
+    "unauthorized_access":
+      code: 422
+      title: "Unauthorized Access"
+      detail: "You must login to continue"
+
+    "insufficient_parameters":
+      code: 422
+      title: "Insufficient Parameters"
+      detail: "Please try again"
+      
+    "doubt_not_found":
+      code: 404
+      title: "Doubt not found"
+      detail: "Doubt has either been deleted or marked solved"
