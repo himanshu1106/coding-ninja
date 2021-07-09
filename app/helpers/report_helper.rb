@@ -21,10 +21,9 @@ module ReportHelper
       ta_vs_stats_hash[solver_id]["total_time"] = ta_vs_stats_hash[solver_id]["total_time"] || 0
       ta_vs_stats_hash[solver_id]["total_time"] += (doubt_detail["count_req"] * doubt_detail["avg_time"])
     end
-    
     ta_vs_stats_hash.each do |solver_id, stats_hash|
       total_time = stats_hash["total_time"]
-      total_doubts = stats_hash.values.sum
+      total_doubts = stats_hash["done"].to_i + stats_hash["escalated"].to_i + stats_hash["active"].to_i
       ta_vs_stats_hash[solver_id]["total"] = total_doubts
       ta_vs_stats_hash[solver_id]["average_time"] = seconds_to_duration(total_time/total_doubts)
     end
@@ -40,16 +39,15 @@ module ReportHelper
     days = hours/24
     hours = hours % 24
     duration_string = ""
-
     if days != 0
       duration_string += "#{days} Days"
     end
 
-    if days!=0 || hours != 0
+    if days!=0 || hours != 0 
       duration_string += "#{hours} Hr "
     end
 
-    if days!=0 || hours !=0
+    if days!=0 || hours !=0 || minutes != 0
       duration_string += "#{minutes} Min"
     end
 

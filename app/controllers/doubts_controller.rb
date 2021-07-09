@@ -4,13 +4,12 @@ class DoubtsController < ApiController
 
 
     def create
-        # byebug
         doubt, error = Doubt.create_new(params.permit(:title, :description), @user)
-        # render_json_error(error) and return if error.present?
-        
-        redirect_to "/users/home"
-
-        # render json: ActiveModelSerializers::SerializableResource.new(doubt).as_json and return
+        if error.present?
+            flash[:error_message] = error
+            redirect_to "/doubts/new" and return
+        end
+        redirect_to "/users/home" and return
     end
 
     def accept

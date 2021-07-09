@@ -213,7 +213,10 @@ a{
 
      <div id = "navbar">
        <div> <img class="logo" src="/images/logo.jpeg"></div>
-        <div id="nav-path"> <a href='/users/home'>Home</a>|<a href='/doubts/new'> Raise Doubt </a>
+        <div id="nav-path"> <a href='/users/home'>Home</a>
+        <%if @user.student?%>
+            |<a href='/doubts/new'> Raise Doubt </a> 
+        <%end%>        
         <%if @user.is_ta? || @user.is_teacher?%>
         | <a href='/doubts'> Solve Doubt </a> 
         <%end%>  

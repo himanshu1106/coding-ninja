@@ -3,13 +3,13 @@ Rails.application.routes.draw do
 
   
 
-  resources :comments
-  resources :doubts
+  resources :comments, only: [:create]
+  resources :doubts, only: [:new, :index, :create]
   
-  get '/', to: 'users#login'
+  get '/', to: 'users#login_form'
 
   scope :doubts do
-    get '', to: 'doubts#index'
+    get '/', to: 'doubts#index'
     get '/:id/solve', to: 'doubts#accept'
     patch '/:id/solve', to: 'doubts#resolve'
     post '/:id/escalate', to: 'doubts#escalate'

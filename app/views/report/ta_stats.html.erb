@@ -144,7 +144,10 @@ a{
 
     <div id = "navbar">
        <div> <img class="logo" src="/images/logo.jpeg"></div>
-        <div id="nav-path"> <a href='/users/home'>Home</a>|<a href='/doubts/new'> Raise Doubt </a> 
+        <div id="nav-path"> <a href='/users/home'>Home</a>
+        <%if @user.student?%>
+            |<a href='/doubts/new'> Raise Doubt </a> 
+        <%end%>
         <%if @user.is_ta? || @user.is_teacher?%>
         | <a href='/doubts'> Solve Doubt </a> 
         <%end%> 
@@ -181,7 +184,7 @@ a{
             <div class="white-area">
             </div>
             <div class="stat">
-                <div class="stat-value"><%= @overall_stats["avg_time"]%></div>
+                <div class="stat-value"><%= @overall_stats["avg_time"].present? ? @overall_stats["avg_time"] : "0 Min"%></div>
                 <div class="stat-type"> Avg. Doubt Resolution Time</div>
             </div>
         </div>
@@ -198,7 +201,7 @@ a{
                     <%if !@ta_vs_stats_hash.has_key?(user_id)%>
                         Doubts Accepted: 0 | Doubts Resolved: 0 | Doubts Escalated: 0 | Average Doubt Activity Time : 0 min
                     <% else %>
-                        Doubts Accepted: <%=@ta_vs_stats_hash[user_id]["total"] %> | Doubts Resolved: <%=@ta_vs_stats_hash[user_id]["done"] %>] | Doubts Escalated: <%=@ta_vs_stats_hash[user_id]["escalated"] %> | Average Doubt Activity Time : <%=@ta_vs_stats_hash[user_id]["average_time"] %>
+                        Doubts Accepted: <%=@ta_vs_stats_hash[user_id]["total"] %> | Doubts Resolved: <%=@ta_vs_stats_hash[user_id]["done"] %> | Doubts Escalated: <%=@ta_vs_stats_hash[user_id]["escalated"] %> | Average Doubt Activity Time : <%=@ta_vs_stats_hash[user_id]["average_time"] %>
                     <%end%>
                 </div>
 

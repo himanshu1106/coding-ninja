@@ -116,13 +116,21 @@ a{
     text-decoration: none;
 }
 
+.error{
+  text-align: center;
+  line-height: 20pt;
+  color: red;
+}
 </style>
 
 <body>
 
     <div id = "navbar">
        <div> <img class="logo" src="/images/logo.jpeg"></div>
-        <div id="nav-path"> <a href='/users/home'>Home</a>|<a href='/doubts/new'> Raise Doubt </a> 
+        <div id="nav-path"> <a href='/users/home'>Home</a>
+        <%if @user.student?%>
+            |<a href='/doubts/new'> Raise Doubt </a> 
+        <%end%>
         <%if @user.is_ta? || @user.is_teacher?%>
         | <a href='/doubts'> Solve Doubt </a> 
         <%end%> 
@@ -139,7 +147,11 @@ a{
     <div class="main">
         <div style="height: 60px; font-weight: bold; font-size: xx-large;">Raise Doubt</div>
     <div class="form-box">
-        <div style="height: 50px;"></div>
+        <div style="height: 50px;">
+          <%if flash[:error_message].present? %>
+            <div class="error">Error!! <%= flash[:error_message]%></div>
+          <%end%>
+        </div>
         <div>
         </div>
         <%= form_with  url: "/doubts", method: :post do |form| %>

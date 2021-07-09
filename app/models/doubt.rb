@@ -11,10 +11,11 @@ class Doubt < ApplicationRecord
     enum status: [:in_active, :active, :in_progress, :solved]
 
     def self.create_new(params, user)
+        return nil, "Title & Description are mandatory" unless (params["title"].present? && params["description"].present?)
         doubt = Doubt.new(status: :active, user_id: user.id)
         doubt.title = params["title"]
         doubt.description = params["description"]
-        return nil, "operation_failed" unless doubt.save
+        return nil, "Operation Failed" unless doubt.save
         return doubt
     end
 
@@ -24,7 +25,9 @@ class Doubt < ApplicationRecord
         self.solved_at = Time.now
         self.status = "solved"
         self.save
-        self.doubt_ta_mappings.active.for_solver_id(user.id).update_all(status: :done)
+        dtmapping = self.doubt_ta_mappings.active.for_solver_id(user.id).last
+        dtmapping.status = "done"
+        dtmapping.save
     end
 
     def is_solved?
