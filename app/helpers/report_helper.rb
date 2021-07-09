@@ -6,8 +6,12 @@ module ReportHelper
     overall_stats["doubts_solved"] = Doubt.solved.size
     overall_stats["doubts_escalated"] = DoubtTaMapping.get_escalated_count
     ta_vs_stats_hash = get_ta_vs_stats_hash
-    overall_stats["avg_time"] = seconds_to_duration(ta_vs_stats_hash.values.pluck("total_time").sum/ overall_stats["doubts_solved"] )
+    average_time = Doubt.solved.select("avg(solved_at - created_at) as avg_time")
+    average_time = average_time.take.avg_time.seconds
+    overall_stats["avg_time"] = seconds_to_duration(average_time.to_i)
     return overall_stats, ta_vs_stats_hash
+
+    D
   end
 
   def get_ta_vs_stats_hash
