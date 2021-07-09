@@ -14,13 +14,12 @@ class UsersController < ApiController
     end
 
     def logout
-        session["current_user_id"] = nil
-        reset_session
-        redirect_to "/users/login_form"
+      destroy_session
+      redirect_to "/users/login"
     end
 
     def home
-        @doubts = Doubt.active_or_resolved.order(created_at: :desc).includes(:user, comments: :user)
+      @doubts = get_home_data        
     end
 
     def login_form
@@ -32,6 +31,17 @@ class UsersController < ApiController
     def extract_params
         @user_name = params['username']
         @password = params['password']
+    end
+
+    def get_home_data
+        @doubts = Doubt.active_or_resolved.order(created_at: :desc).includes(:user, comments: :user)
+    end
+
+    def get_ta_home_data
+
+    end
+
+    def get_teacher_home_data
 
     end
 end

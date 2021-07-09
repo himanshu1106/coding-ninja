@@ -13,11 +13,17 @@ class DoubtsController < ApiController
         # render json: ActiveModelSerializers::SerializableResource.new(doubt).as_json and return
     end
 
-    def show
+    def accept
         doubt_id = params["id"]
-        doubt = Doubt.active_or_resolved.for_id(doubt_id)
-        render_json_error("doubt_not_found") and return unless doubt.present?
-        # render json: ActiveModelSerializers::SerializableResource.new(doubt).as_json and return
+        @doubt = Doubt.active.for_id(doubt_id).includes(:user, :solver).take
+        if !@doubt.present?
+            flash[:error_message] = "Doubt not found !! Doubt has been solved or removed."
+            redirect_to "/users/login"
+            return
+        end
+        @doubt.mark_accepted
+
+        render "doubts/show"
     end
 
     def index
@@ -30,10 +36,18 @@ class DoubtsController < ApiController
     end
 
     def resolve
-        doubt = Doubt.active.find_by_id(@doubt_id)
-        render_json_error("doubt_not_found") and return unless doubt.present?
-        doubt.mark_resolve(@solution, @user)
-        render json: ActiveModelSerializers::SerializableResource.new(doubt).as_json and return
+        @doubt = Doubt.in_progress.find_by_id(@doubt_id)
+        render_json_error("doubt_not_found") and return unless @doubt.present?
+        @doubt.mark_resolve(@solution, @user)
+        render "doubts/show"
+    end
+
+    def escalate
+        @doubt_id = params["id"]
+        @doubt = Doubt.in_progress.find_by_id(@doubt_id)
+        render_json_error("doubt_not_found") and return unless @doubt.present?
+        @doubt.mark_escalated
+        redirect_to "/doubts"
     end
 
     def stats
@@ -53,7 +67,7 @@ class DoubtsController < ApiController
 
     def validate_resolve_params
       @doubt_id = params["id"]
-      @solution = params["solution"]
+      @solution = params["answer"]
       render_json_error("insufficient_parameters") unless (@doubt_id.present? && @solution.present?)
     end
 end

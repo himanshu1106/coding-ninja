@@ -6,12 +6,14 @@ Rails.application.routes.draw do
   resources :comments
   resources :doubts
   
+  get '/', to: 'users#home'
+
   scope :doubts do
-    get '/:id',  to: 'doubts#show'
     get '', to: 'doubts#index'
+    get '/:id/solve', to: 'doubts#accept'
     patch '/:id/solve', to: 'doubts#resolve'
+    post '/:id/escalate', to: 'doubts#escalate'
     get '/stats', to: 'doubts#stats'
-    # get '/create_doubt', to: 'douPATCHbts#new_doubt'
   end
 
   scope :reports  do

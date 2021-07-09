@@ -79,7 +79,7 @@
     position: relative;
     left: 20px;
     width: 400px;
-    height: 160px;
+    min-height: 160px;
     border: 3px solid #947ed6;
     background-color: #e1e0e4;
     /* align: center; */
@@ -93,7 +93,7 @@
     border-bottom: 1px solid black;
 }
 .title{
-    width: 450px;
+    width: 400px;
     font-weight: bold;
     padding: 20px 20px 7px 29px;
 }
@@ -152,11 +152,12 @@
 }
 
 .answer-area{
-    width: 380px;
-    height: 60px;
-    padding-bottom: 5px;
+    width: 350px;
+    min-height: 60px;
+    padding: 20px;
     margin-bottom: 5;
     border: 2px solid #b5a5e5; 
+    background: white;
 }
 
 .answer-button{
@@ -198,14 +199,32 @@
     border: 1px solid #5c69da;
 }
 
+a{
+    padding: 2px;
+    font-style: Serif;
+    color: black;
+    font-weight: 900;
+    text-decoration: none;
+}
+
 </style>
 
 <body>
 
-    <div id = "navbar">
-       <div> <img class="logo" src="logo.jpeg"></div>
-        <div id="nav-path"> Home|Raise Doubt </div>
-        <button class="logout-button"> Logout</button>
+     <div id = "navbar">
+       <div> <img class="logo" src="/images/logo.jpeg"></div>
+        <div id="nav-path"> <a href='/users/home'>Home</a>|<a href='/doubts/new'> Raise Doubt </a>
+        <%if @user.is_ta? || @user.is_teacher?%>
+        | <a href='/doubts'> Solve Doubt </a> 
+        <%end%>  
+        <%if @user.is_teacher?%>
+        | <a href='/reports/ta_stats'>  Dashboard </a> 
+        <%end%>       
+        </div>
+        <%= form_with url: "/users/logout", method: :post do |form| %>
+        <%# <input type="hidden" name="_method" value="patch" /> %>
+        <button class="logout-button" type="submit"> Logout</button>
+        <%end%>
     </div>
     <div id = "nav-area"></div>
 
@@ -217,34 +236,48 @@
             <div class="form-box">
                 <div style="height: 20px;"></div>
                 <div class="doubt-box">
-                    <div class="title"> Title</div>
-                    <div class="description"> on has no addresses it renders nothing. A common pattern is for the controller to build one or more empty children so that at least one set of fields is shown to the user. The exWhen an association accepts nested attributes fields_for renders its block once </div>
-                    <div class="asked_by">Asked by: John Doe on Aug 8:2017</div>
+                    <div class="title"><%= @doubt.title %> </div>
+                    <div class="description"> <%= @doubt.description %> </div>
+                    <div class="asked_by">Asked by: <%= @doubt.user.first_name%> on <%=@doubt.created_at.strftime("%b %d,  %I:%M %p")%> </div>
                 </div>
                 <div class="comment-box">
-                    <div class="comment-count"> 3 Comments </div>
-                        <div class="comment"> When an association accepts nested attributes fields_for renders its block once for every element of the association. In particular, if a person has no addresses it renders nothing. A common pattern is for the controller to build one or more empty children so that at least one set of fields is shown to the user. The exWhen an association accepts nested attributes fields_for renders its block once
-                        </div>
+                    <div class="comment-count"> <%= @doubt.comments.size%> Comments </div>
+                        <% @doubt.comments.each do |comment| %>
+                            <div class="comment"> <%= comment.user.first_name %> : <%= comment.comment%>
+                            
+                            </div>
+                            <div style="height:5px;"></div>
+                        <%end%>
+
                 </div>
             </div>
             <div>
                 <div class="answer-box">
                     <div style=""><strong> Answer</strong></div>
                     <div>
-                        <form>
-                            <input type ="text" class="answer-area">
+                    <%if @doubt.is_solved?%>
+                        <div class="answer-area"> <%= @doubt.solution %>
+                        <br>Answered By: <%= @doubt.solver.first_name %>
+                        </div>
+
+                    <% else %>
+                        <%= form_with url: "/doubts/#{@doubt.id}/solve", method: :patch do |form| %>
+                            <input type ="text" class="answer-area" name="answer">
                             <input type= "submit" class="answer-button" value="Answer" name ="comment">
-                        </form>
+                        <%end%>
+                    <%end%>
                     </div>
                     <div>
                        
                     </div>
                 </div>
+                <%if !@doubt.is_solved?%>
                 <div style="float:right">
-                    <form>
+                    <%= form_with url: "/doubts/#{@doubt.id}/escalate", method: :post do |form| %>
                         <input type= "submit" class="comment-button" value="Escalate" name ="comment">
-                    </form>
+                    <%end%>
                 </div>
+                <%end%>
             </div>
             </div>
             <div style="height: 60px;"></div>

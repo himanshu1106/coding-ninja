@@ -1,0 +1,2 @@
+class DoubtTaMappingController < ApiController
+end

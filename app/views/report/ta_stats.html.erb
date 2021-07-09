@@ -131,14 +131,30 @@
     border: 1px solid gray;
 }
 
+a{
+    padding: 2px;
+    font-style: Serif;
+    color: black;
+    font-weight: 900;
+    text-decoration: none;
+}
 </style>
 
 <body>
 
     <div id = "navbar">
-       <div> <img class="logo" src="logo.jpeg"></div>
-        <div id="nav-path"> Home|Raise Doubt </div>
-        <button class="logout-button"> Logout</button>
+       <div> <img class="logo" src="/images/logo.jpeg"></div>
+        <div id="nav-path"> <a href='/users/home'>Home</a>|<a href='/doubts/new'> Raise Doubt </a> 
+        <%if @user.is_ta? || @user.is_teacher?%>
+        | <a href='/doubts'> Solve Doubt </a> 
+        <%end%> 
+        <%if @user.is_teacher?%>
+        | <a href='/reports/ta_stats'>  Dashboard </a> 
+        <%end%> 
+        </div>
+        <%= form_with url: "/users/logout", method: :post do |form| %>
+        <button class="logout-button" type="submit"> Logout</button>
+        <%end%>
     </div>
     <div id = "nav-area"></div>
 
@@ -147,25 +163,25 @@
         </div>
         <div class="stat-summary">
             <div class="stat"> 
-                <div class="stat-value">15</div>
+                <div class="stat-value"><%= @overall_stats["total_doubts"]%></div>
                 <div class="stat-type"> Doubt Asked</div>
             </div>
             <div class="white-area">
             </div>
             <div class="stat">
-                <div class="stat-value">1522</div>
+                <div class="stat-value"><%= @overall_stats["doubts_solved"]%></div>
                 <div class="stat-type"> Doubt Resolved</div>
             </div>
             <div class="white-area">
             </div>
             <div class="stat">
-                <div class="stat-value">1225</div>
+                <div class="stat-value"><%= @overall_stats["doubts_escalated"]%></div>
                 <div class="stat-type"> Doubt Escalated</div>
             </div>
             <div class="white-area">
             </div>
             <div class="stat">
-                <div class="stat-value">1 hr 35 min</div>
+                <div class="stat-value"><%= @overall_stats["avg_time"]%></div>
                 <div class="stat-type"> Avg. Doubt Resolution Time</div>
             </div>
         </div>
@@ -175,18 +191,26 @@
             <div>
                 TAs Report<br><br>
             </div>
-            <div class="ta-report">
+            
+            <% @all_teaching_assistants.each do |user_id, name|%>
+                <div class="ta-report">
+                    <%= name%>:<br>
+                    <%if !@ta_vs_stats_hash.has_key?(user_id)%>
+                        Doubts Accepted: 0 | Doubts Resolved: 0 | Doubts Escalated: 0 | Average Doubt Activity Time : 0 min
+                    <% else %>
+                        Doubts Accepted: <%=@ta_vs_stats_hash[user_id]["total"] %> | Doubts Resolved: <%=@ta_vs_stats_hash[user_id]["done"] %>] | Doubts Escalated: <%=@ta_vs_stats_hash[user_id]["escalated"] %> | Average Doubt Activity Time : <%=@ta_vs_stats_hash[user_id]["average_time"] %>
+                    <%end%>
+                </div>
+
+            <%end%>
+            <%# <div class="ta-report">
                 John Doe:<br>
                 Doubts Accepted: 15 | Doubts Resolved: 12 | Doubts Escalated: 14 | Average Doubt Activity Time :2hr 33min
             </div>
             <div class="ta-report">
                 John Doe:<br>
                 Doubts Accepted: 15 | Doubts Resolved: 12 | Doubts Escalated: 14 | Average Doubt Activity Time :2hr 33min
-            </div>
-            <div class="ta-report">
-                John Doe:<br>
-                Doubts Accepted: 15 | Doubts Resolved: 12 | Doubts Escalated: 14 | Average Doubt Activity Time :2hr 33min
-            </div>
+            </div> %>
         </div>
         <div class="white-area">
         </div>

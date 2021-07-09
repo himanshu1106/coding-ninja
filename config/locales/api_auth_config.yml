@@ -1,4 +1,26 @@
-"users": {"login": 0, "home": 1, "logout": 1}
-"doubts": {"create": 1, "update": 1, "show": 1, "index": 1, "resolve": 1, "new": 1}
-"comments": {"create": 1}
+# "users": {"login": 0, "home": 1, "logout": 1}
+# "doubts": {"create": 1, "update": 1, "show": 1, "index": 1, "resolve": 1, "new": 1}
+# "comments": {"create": 1}
+
+"student": {
+  "users": {"logout": 1, "home": 1},
+  "doubts": {"create": 1,  "new": 1},
+  "comments": {"create": 1}
+}
+
+"teacher": {
+  "users": {"logout": 1, "home": 1},
+  "doubts": {"create": 1, "index": 1, "new": 1, "accept": 1},
+  "comments": {"create": 1},
+  "report": {"ta_stats": 1}
+}
   
+"teaching_assistant": {
+  "users": {"logout": 1, "home": 1},
+  "doubts": {"create": 1, "index": 1, "new": 1, "accept": 1, "resolve": 1, "escalate": 1},
+  "comments": {"create": 1}
+}
+
+"no_authentication_required": {
+  "users": {"login_form": 0, "login": 0}
+}

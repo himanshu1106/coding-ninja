@@ -1,6 +1,6 @@
 class ApiController < ApplicationController
 
-  before_action :authenticate_api
+  before_action :authenticate_api, :authorize_api
   
   def authenticate_api
     controller_name = params["controller"]
@@ -8,10 +8,20 @@ class ApiController < ApplicationController
     user_id = session["current_user_id"]
     if user_id.present?
       @user = User.find_by(id: user_id)
-    elsif (API_AUTH_CONFIG[controller_name][action_name] == 1)
+      User.current= @user
+      if API_AUTH_CONFIG[@user.login_type][controller_name][action_name] != 1
+        flash[:error_message] = "Unauthorized Access"
+        destroy_session
+        redirect_to "/users/login" and return
+      end
+    elsif (API_AUTH_CONFIG["no_authentication_required"][controller_name][action_name] == 1)
       flash[:error_message] = @error_message
       redirect_to "/users/login" and return
     end
+  end
+
+  def authorize_api
+
   end
 
   def render_json_error(error_code, extra = "")
@@ -41,5 +51,10 @@ class ApiController < ApplicationController
     # render_json_error('unauthorized_access') and return unless user_id.present?
     
     # render_json_error('unauthorized_access') and return unless @user.present?
+  end
+
+  def destroy_session
+    session["current_user_id"] = nil
+    reset_session
   end
 end

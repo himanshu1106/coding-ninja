@@ -28,4 +28,12 @@ class User < ActiveRecord::Base
     def is_session_present?(session)
         return session["current_user_id"].present? && session["current_user_id"]==self.id
     end
+
+    def self.current= user
+        Thread.current["current_user"] = user
+    end
+
+    def self.current
+        return Thread.current["current_user"]
+    end
 end

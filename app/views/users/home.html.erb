@@ -76,15 +76,15 @@
     border-bottom: 1px solid black;
 }
 .title{
-    width: 750px;
+    width: 650px;
     font-weight: bold;
     font-size: 20pt;
-    padding: 20px 20px 7px 20px;
+    padding: 10px 20px 7px 35px;
 }
 
 .description{
     /* width: px; */
-     padding: 7px 20px 7px 20px;
+     padding: 7px 20px 7px 35px;
      
 }
 .asked_by{
@@ -98,7 +98,7 @@
 .answered_by{
     /* float: right; */
     text-align: left;
-    padding: 7px 30px 7px 20px;
+    padding: 7px 30px 7px 35px;
     /* padding-right: 30px; */
     height: 30px;
 }
@@ -174,13 +174,34 @@ a{
     text-decoration: none;
 }
 
+.status{
+   /* width: 750px; */
+    width: 120px;
+    height: 20px;
+    /* font-weight: bold; */
+    font-size: 15pt;
+    padding: 5px 10px 5px 10px; 
+    border: 1px solid cyan;
+    position: relative;
+    right: 10px;
+    text-align:center;
+    background: #E0FFFF;
+}
+
 </style>
 
 <body>
 
     <div id = "navbar">
        <div> <img class="logo" src="/images/logo.jpeg"></div>
-        <div id="nav-path"> <a href='/users/home'>Home</a>|<a href='/doubts/new'> Raise Doubt </a> </div>
+        <div id="nav-path"> <a href='/users/home'>Home</a>|<a href='/doubts/new'> Raise Doubt </a> 
+        <%if @user.is_ta? || @user.is_teacher?%>
+        | <a href='/doubts'> Solve Doubt </a> 
+        <%end%> 
+        <%if @user.is_teacher?%>
+        | <a href='/reports/ta_stats'>  Dashboard </a> 
+        <%end%>        
+        </div>
         <%= form_with url: "/users/logout", method: :post do |form| %>
         <%# <input type="hidden" name="_method" value="patch" /> %>
         <button class="logout-button" type="submit"> Logout</button>
@@ -196,16 +217,21 @@ a{
             <div class="form-box">
                 <div style="height: 20px;"></div>
                 <div class="doubt-box">
-                    <div class="title"> <%= doubt.title%></div>
+                    <div style="display: flex;">
+                        <div class="title"> <%= doubt.title%></div>
+                        <% if doubt.is_solved?%>
+                            <div class="status">Resolved</div>
+                        <%end%>
+                    </div>
                     <div class="description"> <%= doubt.description%> </div>
-                    <div class="asked_by">Asked by: John Doe on Aug 8:2017</div>
+                    <div class="asked_by">Asked by: <%= doubt.user.first_name %> on <%= doubt.created_at.strftime("%b %d,  %I:%M %p") %></div>
                     <% if doubt.is_solved?%>
                         <div class="description">
                         <strong>Answer: </strong>
                 
                             <%= doubt.solution%>
                         </div>
-                        <div class="answered_by">Answered_by: <%= doubt.solver.first_name%> Aug 8:2017</div>
+                        <div class="answered_by">Answered_by: <%= doubt.solver.first_name%> <%= doubt.solved_at.strftime("%b %d,  %I:%M %p") %></div>
                     <%end%>
                 </div>
                 <div class="comment-box">
