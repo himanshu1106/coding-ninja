@@ -21,13 +21,12 @@ class DoubtsController < ApiController
             return
         end
         @doubt.mark_accepted
-
         render "doubts/show"
     end
 
     def index
         @doubts = Doubt.active.order(created_at: :desc)
-        # render json: ActiveModelSerializers::SerializableResource.new(@doubts).as_json and return
+
     end
 
     def new

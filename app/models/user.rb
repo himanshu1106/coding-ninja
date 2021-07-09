@@ -5,35 +5,35 @@ class User < ActiveRecord::Base
     enum login_type: [:student, :teacher, :teaching_assistant]
 
     def self.validate_login(user_name, password)
-        user = User.find_by(first_name: user_name)
-        return nil, nil, "User Not Found" unless user.present?
-        return nil, nil, "Incorrect Password" unless user.authenticate(password)
-        session = Session.get_new_session(user)
-        return user, session, nil
+      user = User.find_by(first_name: user_name)
+      return nil, nil, "User Not Found" unless user.present?
+      return nil, nil, "Incorrect Password" unless user.authenticate(password)
+      session = Session.get_new_session(user)
+      return user, session, nil
     end
 
 
     def is_student?
-        return self.login_type == "student"
+      return self.login_type == "student"
     end
 
     def is_teacher?
-        return self.login_type == "teacher"
+      return self.login_type == "teacher"
     end
 
     def is_ta?
-        return self.login_type == "teaching_assistant"
+      return self.login_type == "teaching_assistant"
     end
 
     def is_session_present?(session)
-        return session["current_user_id"].present? && session["current_user_id"]==self.id
+      return session["current_user_id"].present? && session["current_user_id"]==self.id
     end
 
     def self.current= user
-        Thread.current["current_user"] = user
+      Thread.current["current_user"] = user
     end
 
     def self.current
-        return Thread.current["current_user"]
+      return Thread.current["current_user"]
     end
 end

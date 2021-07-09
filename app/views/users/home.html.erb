@@ -206,15 +206,15 @@ a{
         <%end%>        
         </div>
         <%= form_with url: "/users/logout", method: :post do |form| %>
-        <%# <input type="hidden" name="_method" value="patch" /> %>
         <button class="logout-button" type="submit"> Logout</button>
         <%end%>
     </div>
     <div id = "nav-area"></div>
 
-    <!-- <div w3-include-html="navbar.html"></div> -->
     <div class="main">
         <div style="height: 60px; font-weight: bold; font-size: xx-large; padding: 5px;">Home</div>
+        <div style="height: 30px; position: relative; text-align: right; font-weight: bold; font-size: large; padding-right: 20px;"><%= @doubts.size%> Doubts</div>
+
         
         <% @doubts.each do |doubt|%>
             <div class="form-box">
@@ -238,7 +238,13 @@ a{
                     <%end%>
                 </div>
                 <div class="comment-box">
-                    <div class="comment-count"> <%= doubt.comments.size%> Comments </div>
+                    <div class="comment-count"> <%= doubt.comments.size%> 
+                    <% if doubt.comments.size > 1%>
+                        Comments 
+                    <%else%>
+                        Comment
+                    <%end%>
+                    </div>
                     <% doubt.comments.each do |comment|%>
                         <div class="comment">  <%= comment.user.first_name %> : <%= comment.comment%></div>
                         <div style="height: 5px;"></div>
@@ -258,7 +264,4 @@ a{
 
         <%end%>
     </div>
-
-    <!-- <div class="form-box"></div> -->
-    <!-- sajidjidosudiouoidudouias -->
 </body>
