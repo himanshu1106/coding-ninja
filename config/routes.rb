@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :comments
   resources :doubts
   
-  get '/', to: 'users#home'
+  get '/', to: 'users#login'
 
   scope :doubts do
     get '', to: 'doubts#index'
