@@ -10,8 +10,6 @@ module ReportHelper
     average_time = average_time.take.avg_time.to_i
     overall_stats["avg_time"] = seconds_to_duration(average_time.to_i)
     return overall_stats, ta_vs_stats_hash
-
-    D
   end
 
   def get_ta_vs_stats_hash
