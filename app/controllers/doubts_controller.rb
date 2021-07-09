@@ -6,20 +6,27 @@ class DoubtsController < ApiController
     def create
         # byebug
         doubt, error = Doubt.create_new(params.permit(:title, :description), @user)
-        render_json_error(error) and return if error.present?
-        render json: ActiveModelSerializers::SerializableResource.new(doubt).as_json and return
+        # render_json_error(error) and return if error.present?
+        
+        redirect_to "/users/home"
+
+        # render json: ActiveModelSerializers::SerializableResource.new(doubt).as_json and return
     end
 
     def show
         doubt_id = params["id"]
         doubt = Doubt.active_or_resolved.for_id(doubt_id)
         render_json_error("doubt_not_found") and return unless doubt.present?
-        render json: ActiveModelSerializers::SerializableResource.new(doubt).as_json and return
+        # render json: ActiveModelSerializers::SerializableResource.new(doubt).as_json and return
     end
 
     def index
-        doubts = Doubt.active.order(:created_at)
-        render json: ActiveModelSerializers::SerializableResource.new(doubts).as_json and return
+        @doubts = Doubt.active.order(created_at: :desc)
+        # render json: ActiveModelSerializers::SerializableResource.new(@doubts).as_json and return
+    end
+
+    def new
+        
     end
 
     def resolve

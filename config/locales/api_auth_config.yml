@@ -1,3 +1,4 @@
 "users": {"login": 0, "home": 1, "logout": 1}
-"doubts": {"create": 1, "update": 1, "show": 1, "index": 1, "resolve": 1}
+"doubts": {"create": 1, "update": 1, "show": 1, "index": 1, "resolve": 1, "new": 1}
+"comments": {"create": 1}
   

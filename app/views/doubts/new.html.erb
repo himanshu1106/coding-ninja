@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<style>
+    #navbar {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    height: 50px;
+    border: 2px solid blue;
+    background-color: #e1e0e4;
+    display: inline-block;
+    width: 100%;
+}
+#nav-path{
+    float: left;
+    /* position: relative; */
+    align-content: flex-start;
+    height: 30ox;
+    padding: 14px 0px 14px 0px;
+    margin: auto;
+    /* font-weight: ;  */
+    font-size: large;
+    /* border: 2px solid black; */
+}
+
+.logo {
+    float: left;
+    height: 25px;
+    width: 25px;
+    padding: 10px;
+    /* border: 2px solid; */
+    /* border-color: black; */
+}
+
+.main{
+    position: relative;
+    top: 60px;
+    left: 190px;
+    display: flex;
+    width: 900px;
+    flex-direction: column;
+    /* height: 500px; */
+    /* border: 2px solid gray; */
+}
+.form-box{
+    /* right: 300px; */
+    width: 900px;
+    border: 4px solid gray;
+    background-color: #e1e0e4;
+    /* background-color: black; */
+}
+
+/* .main > * {
+    position: relative;
+    /* display: block; 
+    left: 75px;
+    width: 700px;
+    padding: 20px;
+} */
+
+#form-field{
+    position: relative;
+    display: block;
+    left: 75px;
+    width: 700px;
+    height: 100px ;
+    margin: 5px;
+    /* border: 1px solid blue; */
+    font-weight: bold;
+}
+
+#doubt-title{
+    width: 690px;
+    height: 45px;
+    border: 3px solid #ac9fda; 
+}
+
+#text-field{
+    /* padding: 3px; */
+    height: 30px;
+}
+#doubt-description{
+    width: 700px;
+    height: 80px;
+    border: 3px solid blue;
+}
+
+.submit-button{
+    background-color: #636fdb;
+    float: right;
+    /* height: 10px; */
+    /* width: 15px; */
+    /* color: blue; */
+    top: 20px;
+    font-size: 30px;
+    padding: 10px 40px;
+    border-radius: 8px;
+
+}
+
+.logout-button{
+    background-color: #828ad1;
+    float: right;
+    position:relative;
+    right: 5px;
+    top: 5px;
+    font-size: 25px;
+    padding: 3px 25px;
+    border-radius: 8px;
+}
+
+</style>
+
+<body>
+
+    <div id = "navbar">
+       <div> <img class="logo" src="logo.jpeg"></div>
+        <div id="nav-path"> Home|Raise Doubt </div>
+        <button class="logout-button"> Logout</button>
+    </div>
+
+    <!-- <div w3-include-html="navbar.html"></div> -->
+    <div class="main">
+        <div style="height: 60px; font-weight: bold; font-size: xx-large;">Raise Doubt</div>
+    <div class="form-box">
+        <div style="height: 50px;"></div>
+        <div>
+        </div>
+        <%= form_with  url: "/doubts", method: :post do |form| %>
+        <%# <form class="doubt" method="POST" action="/doubts" > %>
+            <div id="form-field">
+                <div id = "text-field">Title</div>
+                <div><input id="doubt-title" type="text" name="title" placeholder="Title"></div>
+            </div>
+            <div id="form-field">
+                <div id = "text-field">Description</div>
+                <div><input id="doubt-title" type="text" name="description" placeholder=" Description"></div>
+            </div>
+            <div id="form-field">
+                <input type="submit"  value="Ask Doubt"class="submit-button"> 
+            </div>
+            <!-- <div><input id="doubt-title" type="text" name="title" placeholder="Title"><div> -->
+            <!-- <div><input id ="doubt-title" type="text" name="description" placeholder="Description"></div> -->
+        <% end %>
+    </div>
+    </div>
+</body>

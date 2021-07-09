@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<style>
+#navbar {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    height: 50px;
+    border: 2px solid blue;
+    background-color: #e1e0e4;
+    display: inline-block;
+    width: 100%;
+    z-index: 3;
+}
+#nav-path{
+    float: left;
+    /* position: relative; */
+    align-content: flex-start;
+    height: 30ox;
+    padding: 14px 0px 14px 0px;
+    margin: auto;
+    /* font-weight: ;  */
+    font-size: large;
+    /* border: 2px solid black; */
+}
+
+#nav-area{
+    position: fixed;
+    top: 50px;
+    /* right: 0px; */
+    height: 100px;
+    /* border: 2px solid black; */
+    /* background-color: #e1e0e4; */
+    /* display: inline-block; */
+    width: 100%;
+    z-index: 1;
+    background-color: white;
+
+}
+.logo {
+    float: left;
+    height: 25px;
+    width: 25px;
+    padding: 10px;
+    /* border: 2px solid; */
+    /* border-color: black; */
+}
+.logout-button{
+    background-color: #828ad1;
+    float: right;
+    position:relative;
+    right: 5px;
+    top: 5px;
+    font-size: 25px;
+    padding: 3px 25px;
+    border-radius: 8px;
+}
+
+.display-area{
+    display: flex;
+}
+
+.main{
+    position: relative;
+    top: 150px;
+    left: 150px;
+    display: flex;
+    width: 900px;
+    flex-direction: column;
+    /* height: 500px; */
+    /* border: 1px solid gray; */
+    z-index: 0;
+}
+
+.stat-summary{
+    position: relative;
+    left:50px;
+    width: 800px;
+    /* border: 1px solid gray; */
+    display: flex;
+    
+}
+
+.stat{
+    width: 200px;
+    height: 150px;
+    border: 1px solid blue;
+    background-color: #ccc9d3;
+}
+
+.stat-value{
+    font-size: 25pt;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 15pt;
+    padding-top: 40px;
+    height: 75px;
+    position: relative;
+    text-align: center;
+}
+
+.stat-type{
+    float: bottom;
+    /* padding-: 20px; */
+    text-align: center;
+    padding-top: 0px;
+    font-weight: bold;
+    font-size: 10pt;
+
+}
+
+.white-area{
+    height: 40px;
+    width: 30px;
+}
+
+.ta-stats{
+    position: relative;
+    left:50px;
+    width: 770px;
+    padding: 15px;
+
+    border: 1px solid gray;
+    background-color: #ccc9d3;
+}
+
+.ta-report{
+    padding: 10px;
+    line-height: 18pt;
+    width: 96%;
+    background: white;
+    font-size: 10pt;
+    border: 1px solid gray;
+}
+
+</style>
+
+<body>
+
+    <div id = "navbar">
+       <div> <img class="logo" src="logo.jpeg"></div>
+        <div id="nav-path"> Home|Raise Doubt </div>
+        <button class="logout-button"> Logout</button>
+    </div>
+    <div id = "nav-area"></div>
+
+    <div class="main">
+        <div style="height: 60px; font-weight: bold; font-size: xx-large; padding: 5px 5px 5px 50px;"> Dashboard
+        </div>
+        <div class="stat-summary">
+            <div class="stat"> 
+                <div class="stat-value">15</div>
+                <div class="stat-type"> Doubt Asked</div>
+            </div>
+            <div class="white-area">
+            </div>
+            <div class="stat">
+                <div class="stat-value">1522</div>
+                <div class="stat-type"> Doubt Resolved</div>
+            </div>
+            <div class="white-area">
+            </div>
+            <div class="stat">
+                <div class="stat-value">1225</div>
+                <div class="stat-type"> Doubt Escalated</div>
+            </div>
+            <div class="white-area">
+            </div>
+            <div class="stat">
+                <div class="stat-value">1 hr 35 min</div>
+                <div class="stat-type"> Avg. Doubt Resolution Time</div>
+            </div>
+        </div>
+        <div class="white-area">
+        </div>
+        <div class="ta-stats">
+            <div>
+                TAs Report<br><br>
+            </div>
+            <div class="ta-report">
+                John Doe:<br>
+                Doubts Accepted: 15 | Doubts Resolved: 12 | Doubts Escalated: 14 | Average Doubt Activity Time :2hr 33min
+            </div>
+            <div class="ta-report">
+                John Doe:<br>
+                Doubts Accepted: 15 | Doubts Resolved: 12 | Doubts Escalated: 14 | Average Doubt Activity Time :2hr 33min
+            </div>
+            <div class="ta-report">
+                John Doe:<br>
+                Doubts Accepted: 15 | Doubts Resolved: 12 | Doubts Escalated: 14 | Average Doubt Activity Time :2hr 33min
+            </div>
+        </div>
+        <div class="white-area">
+        </div>
+    </div>
+    <div style="height: 60px;"></div>
+    <div class="white-area">
+    </div>
+
+    <div style="height: 10  0px;"></div>
+
+
+</body>

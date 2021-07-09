@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<style>
+#navbar {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    height: 50px;
+    border: 2px solid blue;
+    background-color: #e1e0e4;
+    display: inline-block;
+    width: 100%;
+    z-index: 3;
+}
+#nav-path{
+    float: left;
+    /* position: relative; */
+    align-content: flex-start;
+    height: 30ox;
+    padding: 14px 0px 14px 0px;
+    margin: auto;
+    /* font-weight: ;  */
+    font-size: large;
+    /* border: 2px solid black; */
+}
+
+#nav-area{
+    position: fixed;
+    top: 50px;
+    /* right: 0px; */
+    height: 30px;
+    /* border: 2px solid black; */
+    /* background-color: #e1e0e4; */
+    /* display: inline-block; */
+    width: 100%;
+    z-index: 1;
+    background-color: white;
+
+}
+.logo {
+    float: left;
+    height: 25px;
+    width: 25px;
+    padding: 10px;
+    /* border: 2px solid; */
+    /* border-color: black; */
+}
+
+.logout-button{
+    background-color: #828ad1;
+    float: right;
+    position:relative;
+    right: 5px;
+    top: 5px;
+    font-size: 25px;
+    padding: 3px 25px;
+    border-radius: 8px;
+}
+
+</style>
+
+<div id = "navbar">
+       <div> <img class="logo" src="logo.jpeg"></div>
+        <div id="nav-path"> Home|Raise Doubt </div>
+        <button class="logout-button"> Logout</button>
+    </div>
+    <div id = "nav-area"></div>

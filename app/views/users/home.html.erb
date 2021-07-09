@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<style>
+#navbar {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    height: 50px;
+    border: 2px solid blue;
+    background-color: #e1e0e4;
+    display: inline-block;
+    width: 100%;
+    z-index: 3;
+}
+#nav-path{
+    float: left;
+    /* position: relative; */
+    align-content: flex-start;
+    height: 30ox;
+    padding: 14px 0px 14px 0px;
+    margin: auto;
+    /* font-weight: ;  */
+    font-size: large;
+    /* border: 2px solid black; */
+}
+
+#nav-area{
+    position: fixed;
+    top: 50px;
+    /* right: 0px; */
+    height: 30px;
+    /* border: 2px solid black; */
+    /* background-color: #e1e0e4; */
+    /* display: inline-block; */
+    width: 100%;
+    z-index: 1;
+    background-color: white;
+
+}
+.logo {
+    float: left;
+    height: 25px;
+    width: 25px;
+    padding: 10px;
+    /* border: 2px solid; */
+    /* border-color: black; */
+}
+
+.main{
+    position: relative;
+    top: 150px;
+    left: 190px;
+    display: flex;
+    width: 900px;
+    flex-direction: column;
+    /* height: 500px; */
+    /* border: 1px solid gray; */
+    z-index: 0;
+}
+.form-box{
+    /* position: relative; */
+    /* top: 30px; */
+    /* right: 300px; */
+    width: 890px;
+    border: 3px solid gray;
+    background-color: #e1e0e4;
+    align: center;
+
+    padding: 20px 0px 20px 0px;
+    /* background-color: black; */
+}
+
+.doubt-box{
+    /* padding: 20px; */
+    width: 900px;
+    /* border: 3px solid black; */
+    border-bottom: 1px solid black;
+}
+.title{
+    width: 750px;
+    font-weight: bold;
+    font-size: 20pt;
+    padding: 20px 20px 7px 20px;
+}
+
+.description{
+    /* width: px; */
+     padding: 7px 20px 7px 20px;
+     
+}
+.asked_by{
+    /* float: right; */
+    text-align: right;
+    padding: 7px 30px 7px 20px;
+    /* padding-right: 30px; */
+    height: 30px;
+}
+
+.answered_by{
+    /* float: right; */
+    text-align: left;
+    padding: 7px 30px 7px 20px;
+    /* padding-right: 30px; */
+    height: 30px;
+}
+
+.comment-box{
+    /* padding: 20px; */
+    width: 900px;
+    /* border: 3px solid black; */
+    /* border-bottom: 1px solid black; */
+}
+
+.comment-count{
+    position:relative;
+    left: 30px;
+    padding: 7px 30px 5px 5px;
+}
+
+.comment{
+    top: 1px;
+    position:relative;
+    width: 810px;
+    left: 30px;
+    background-color: #f0f0f0;
+    padding: 7px 20px 7px 7px;
+    border: 1px solid #b5a5e5;
+}
+
+.new-comment{
+    position:relative;
+    top: 10px;
+    width: 830px;
+    left: 30px;
+    padding: 7px 0px 15px 0px;
+    /* border: 2px solid blue; */
+}
+
+.comment-area{
+    width: 650px;
+    height: 30px;
+    
+    padding-bottom: 5px;
+    margin-bottom: 5;
+    border: 2px solid #b5a5e5; 
+}
+
+.comment-button{
+    position:relative;
+    background-color: white;
+    float: right;
+    top: 5px;
+    font-size: 20px;
+    padding: 3px 25px;
+    border-radius: 8px;
+    border: 1px solid grey;
+}
+
+.logout-button{
+    background-color: #828ad1;
+    float: right;
+    position:relative;
+    right: 5px;
+    top: 5px;
+    font-size: 25px;
+    padding: 3px 25px;
+    border-radius: 8px;
+}
+
+a{
+    padding: 2px;
+    font-style: Serif;
+    color: black;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+</style>
+
+<body>
+
+    <div id = "navbar">
+       <div> <img class="logo" src="/images/logo.jpeg"></div>
+        <div id="nav-path"> <a href='/users/home'>Home</a>|<a href='/doubts/new'> Raise Doubt </a> </div>
+        <%= form_with url: "/users/logout", method: :post do |form| %>
+        <%# <input type="hidden" name="_method" value="patch" /> %>
+        <button class="logout-button" type="submit"> Logout</button>
+        <%end%>
+    </div>
+    <div id = "nav-area"></div>
+
+    <!-- <div w3-include-html="navbar.html"></div> -->
+    <div class="main">
+        <div style="height: 60px; font-weight: bold; font-size: xx-large; padding: 5px;">Home</div>
+        
+        <% @doubts.each do |doubt|%>
+            <div class="form-box">
+                <div style="height: 20px;"></div>
+                <div class="doubt-box">
+                    <div class="title"> <%= doubt.title%></div>
+                    <div class="description"> <%= doubt.description%> </div>
+                    <div class="asked_by">Asked by: John Doe on Aug 8:2017</div>
+                    <% if doubt.is_solved?%>
+                        <div class="description">
+                        <strong>Answer: </strong>
+                
+                            <%= doubt.solution%>
+                        </div>
+                        <div class="answered_by">Answered_by: <%= doubt.solver.first_name%> Aug 8:2017</div>
+                    <%end%>
+                </div>
+                <div class="comment-box">
+                    <div class="comment-count"> <%= doubt.comments.size%> Comments </div>
+                    <% doubt.comments.each do |comment|%>
+                        <div class="comment">  <%= comment.user.first_name %> : <%= comment.comment%></div>
+                        <div style="height: 5px;"></div>
+                    <%end%>
+                    <div class="new-comment">
+                    <%= form_with url: "/comments", method: :post do |form| %>
+                        <input type = "hidden" name="doubt_id" value=<%= doubt.id%>>
+                        <input type ="text" class="comment-area" name="comment">
+                        <input type= "submit" class="comment-button" value="Comment">
+                    <%end%>
+                    <div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div style="height: 60px;"></div>
+
+        <%end%>
+    </div>
+
+    <!-- <div class="form-box"></div> -->
+    <!-- sajidjidosudiouoidudouias -->
+</body>

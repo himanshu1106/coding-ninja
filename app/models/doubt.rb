@@ -1,6 +1,7 @@
 class Doubt < ApplicationRecord
     belongs_to :user
-    has_one :solver, class_name: 'User', primary_key: 'user_id', foreign_key: 'solved_by'
+    has_one :solver, class_name: 'User', foreign_key: 'id', primary_key: 'solved_by'
+    has_many :comments
 
     scope :for_id, -> (id){where(id: id)}
     scope :active_or_resolved, -> {where(status: [:active, :solved])}
@@ -21,5 +22,9 @@ class Doubt < ApplicationRecord
         self.solved_at = Time.now
         self.status = "solved"
         self.save
+    end
+
+    def is_solved?
+        return self.status == "solved"
     end
 end
