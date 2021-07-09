@@ -6,7 +6,7 @@ module ReportHelper
     overall_stats["doubts_solved"] = Doubt.solved.size
     overall_stats["doubts_escalated"] = DoubtTaMapping.get_escalated_count
     ta_vs_stats_hash = get_ta_vs_stats_hash
-    overall_stats["avg_time"] = seconds_to_duration(ta_vs_stats_hash.values.pluck("total_time").sum)
+    overall_stats["avg_time"] = seconds_to_duration(ta_vs_stats_hash.values.pluck("total_time").sum/ overall_stats["doubts_solved"] )
     return overall_stats, ta_vs_stats_hash
   end
 
@@ -19,13 +19,16 @@ module ReportHelper
       ta_vs_stats_hash[solver_id] = ta_vs_stats_hash[solver_id] || {}
       ta_vs_stats_hash[solver_id][doubt_status] = doubt_detail["count_req"]
       ta_vs_stats_hash[solver_id]["total_time"] = ta_vs_stats_hash[solver_id]["total_time"] || 0
-      ta_vs_stats_hash[solver_id]["total_time"] += (doubt_detail["count_req"] * doubt_detail["avg_time"])
+      if doubt_status == "done"
+        ta_vs_stats_hash[solver_id]["total_time"] += (doubt_detail["count_req"] * doubt_detail["avg_time"])
+      end
     end
     ta_vs_stats_hash.each do |solver_id, stats_hash|
       total_time = stats_hash["total_time"]
+      doubts_solved = stats_hash["done"]
       total_doubts = stats_hash["done"].to_i + stats_hash["escalated"].to_i + stats_hash["active"].to_i
       ta_vs_stats_hash[solver_id]["total"] = total_doubts
-      ta_vs_stats_hash[solver_id]["average_time"] = seconds_to_duration(total_time/total_doubts)
+      ta_vs_stats_hash[solver_id]["average_time"] = seconds_to_duration(total_time/doubts_solved)
     end
     ta_vs_stats_hash
   end
