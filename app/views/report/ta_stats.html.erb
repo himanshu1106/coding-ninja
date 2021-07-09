@@ -201,7 +201,7 @@ a{
                     <%if !@ta_vs_stats_hash.has_key?(user_id)%>
                         Doubts Accepted: 0 | Doubts Resolved: 0 | Doubts Escalated: 0 | Average Doubt Activity Time : 0 min
                     <% else %>
-                        Doubts Accepted: <%=@ta_vs_stats_hash[user_id]["total"] %> | Doubts Resolved: <%=@ta_vs_stats_hash[user_id]["done"] %> | Doubts Escalated: <%=@ta_vs_stats_hash[user_id]["escalated"] %> | Average Doubt Activity Time : <%=@ta_vs_stats_hash[user_id]["average_time"] %>
+                        Doubts Accepted: <%=@ta_vs_stats_hash[user_id]["total"] %> | Doubts Resolved: <%=@ta_vs_stats_hash[user_id]["done"] || 0 %> | Doubts Escalated: <%=@ta_vs_stats_hash[user_id]["escalated"] || 0 %> | Average Doubt Activity Time : <%=@ta_vs_stats_hash[user_id]["average_time"] %>
                     <%end%>
                 </div>
 

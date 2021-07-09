@@ -227,14 +227,14 @@ a{
                         <%end%>
                     </div>
                     <div class="description"> <%= doubt.description%> </div>
-                    <div class="asked_by">Asked by: <%= doubt.user.first_name %> on <%= doubt.created_at.strftime("%b %d,  %I:%M %p") %></div>
+                    <div class="asked_by"><b>Asked by: </b><%= doubt.user.first_name %> on <%= doubt.created_at.strftime("%b %d,  %I:%M %p") %></div>
                     <% if doubt.is_solved?%>
                         <div class="description">
                         <strong>Answer: </strong>
                 
                             <%= doubt.solution%>
                         </div>
-                        <div class="answered_by">Answered_by: <%= doubt.solver.first_name%> <%= doubt.solved_at.strftime("%b %d,  %I:%M %p") %></div>
+                        <div class="answered_by"><b>Answered By:</b> <%= doubt.solver.first_name%> <%= doubt.solved_at.strftime("%b %d,  %I:%M %p") %></div>
                     <%end%>
                 </div>
                 <div class="comment-box">
