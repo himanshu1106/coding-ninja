@@ -33,7 +33,7 @@ module ReportHelper
       if doubts_solved.to_i > 0
         ta_vs_stats_hash[solver_id]["average_time"] = seconds_to_duration(total_time.to_i/doubts_solved)
       else
-        ta_vs_stats_hash[solver_id]["average_time"] = 0
+        ta_vs_stats_hash[solver_id]["average_time"] = "0 Min"
       end
     end
     ta_vs_stats_hash
@@ -58,6 +58,10 @@ module ReportHelper
 
     if days!=0 || hours !=0 || minutes != 0
       duration_string += "#{minutes} Min"
+    end
+
+    if !duration_string.present?
+      duration_string = "0 Min"
     end
 
     duration_string
